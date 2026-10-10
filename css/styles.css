@@ -484,6 +484,26 @@ body {
 
 .reveal .comparacion figcaption { font-size: 18px; }
 
+/* Opens the demo video of its column. Outlined, not filled: secondary to the diagram it sits under. */
+.reveal .ver-demo {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border: 1px solid var(--color-engines);
+  border-radius: var(--radius-small);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--color-engines-text);
+  cursor: pointer;
+}
+
+.reveal .ver-demo:hover { background: var(--color-surface); color: var(--color-text); }
+
+/* An empty Reveal step: the "next" press that pops the column's video up (js/script.js). Takes no space. */
+.reveal .paso-video { display: none; }
+
 .reveal .comparacion img {
   height: 215px;
   object-fit: contain;
@@ -604,6 +624,9 @@ body {
 /* Dark while the video loads, so the card does not flash white. */
 .reveal .proyecto video { background: var(--color-bg); object-position: center; }
 
+/* A square animation (christian.gif) is shown whole inside the wide frame: cropping it cuts the scene in half. */
+.reveal .proyecto img.demo-entera { object-fit: contain; background: var(--color-bg); }
+
 .reveal .render-lwir {
   display: flex;
   flex-direction: column;
@@ -646,6 +669,47 @@ body {
 .reveal .proyecto p .term { font-size: 16px; }
 .reveal .proyecto .terms { margin-top: auto; font-size: 16px; }
 .reveal .proyecto .placeholder { font-size: 14px; }
+
+/* ------------------------------------------------------------ 06b proyecto Juan Toloza */
+
+/* The given title is long (three lines): smaller than other h2 so the two demos keep the weight. */
+.reveal #proyecto-toloza h2 {
+  font-size: 38px;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.reveal #proyecto-toloza .autor {
+  font-family: var(--font-code);
+  font-size: 18px;
+}
+
+/* Both demos at one height so their tops and captions line up; widths follow each GIF's aspect ratio. */
+.reveal .toloza-demos {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.reveal .toloza-demos figure {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min-content;
+}
+
+.reveal .toloza-demos img {
+  display: block;
+  height: 290px;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.reveal .toloza-demos figcaption { font-size: 18px; }
+.reveal .toloza-demos figcaption .term { display: inline; font-size: 18px; }
 
 /* ------------------------------------------------------------ 07 visión */
 
@@ -929,3 +993,86 @@ body {
     opacity: 1;
   }
 }
+
+/* ------------------------------------------------------------ demo video player (slide 05) */
+
+/* A native <dialog> outside .reveal: sized to the screen, not to the scaled 1280x720 stage. */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  padding: 0;
+  max-width: 92vw;
+  max-height: 94vh;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+/* Dims the slide behind; a click here closes the player (js/script.js). */
+.video-modal::backdrop {
+  background: rgba(11, 15, 25, 0.88);
+}
+
+.video-modal-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.video-modal-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.video-modal-titulo {
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-text-code);
+}
+
+.video-modal-cerrar {
+  padding: 8px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: transparent;
+  font: 500 16px/1.2 var(--font-body);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.video-modal-cerrar:hover { background: var(--color-bg); }
+
+.video-modal-cerrar:focus-visible,
+.video-modal video:focus-visible {
+  outline: 2px solid var(--color-text-code);
+  outline-offset: 3px;
+}
+
+/* Whole frame, never cropped: the height sets the size, the width follows the video's own ratio
+   (set from its metadata in js/script.js; 9:16 until then, the shape of both demos). */
+.video-modal video {
+  display: block;
+  height: calc(94vh - 120px);
+  width: auto;
+  max-width: calc(92vw - 32px);
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  background: #000;
+  border-radius: var(--radius-small);
+}
+
+.video-modal-estado {
+  margin: 0;
+  font-size: 16px;
+  color: var(--color-text-muted);
+}
+
+.video-modal-estado:empty { display: none; }

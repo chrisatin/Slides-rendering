@@ -8,7 +8,7 @@ Convenciones de este documento:
 - **[clic]** marca un avance que revela un elemento de la diapositiva (los fragmentos de Reveal).
 - Los términos técnicos se dicen en inglés, como aparecen en pantalla (*Ray Tracing*, *NeRF*, *3D Gaussian Splatting*).
 - Las notas dentro de `index.html` (tecla **S** en la presentación) son una versión corta de estas.
-
+5
 | # | Diapositiva | Tiempo | Clics |
 |---|---|---|---|
 | 1 | Portada | 1 min | 0 |

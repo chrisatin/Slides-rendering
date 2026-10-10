@@ -32,8 +32,8 @@
           <li><figure><img class="retrato" src="assets/images/jorge-garcia.png" alt="Foto de Jorge Garcia"><figcaption>Jorge Garcia</figcaption></figure></li>
           <li><figure><img class="retrato" src="assets/images/cristian-rey.png" alt="Foto de Cristian Rey"><figcaption>Cristian Rey</figcaption></figure></li>
           <li><figure><img class="retrato" src="assets/images/samuel-penilla.jpg" alt="Foto de Samuel Penilla"><figcaption>Samuel Penilla</figcaption></figure></li>
-          <li><figure><img class="retrato" src="assets/images/juan%20toloza.png" alt="Foto de Juan Toloza"><figcaption>Juan Toloza</figcaption></figure></li>
-          <li><figure><div class="retrato" role="img" aria-label="Espacio para la foto de Juanda Vanegas"></div><figcaption>Juanda Vanegas</figcaption></figure></li>
+          <li><figure><img class="retrato" src="assets/images/juan-toloza.png" alt="Foto de Juan Toloza"><figcaption>Juan Toloza</figcaption></figure></li>
+          <li><figure><img class="retrato" src="assets/images/juanda-vanegas.jpg" alt="Foto de Juanda Vanegas"><figcaption>Juanda Vanegas</figcaption></figure></li>
           <li><figure><img class="retrato" src="assets/images/david-anaya.png" alt="Foto de David Anaya"><figcaption>David Anaya</figcaption></figure></li>
           <li><figure><img class="retrato" src="assets/images/christian-orduz.jpg" alt="Foto de Christian Orduz"><figcaption>Christian Orduz</figcaption></figure></li>
         </ul>
@@ -134,10 +134,14 @@
           <figure class="fragment fade-up">
             <img src="assets/diagrams/rasterizacion.svg" alt="Rasterization: los vértices de un triángulo se proyectan sobre el plano de imagen y se pintan los píxeles que cubre">
             <figcaption><span class="term">Rasterization</span> Del objeto al píxel. Rápido: lo que usa tu GPU en un videojuego.</figcaption>
+            <button type="button" class="ver-demo" data-video="assets/videos/rasterization.mp4" data-title="Rasterization">Ver demostración: Rasterization</button>
+            <span class="fragment paso-video" aria-hidden="true"></span>
           </figure>
           <figure class="fragment fade-up">
             <img src="assets/diagrams/ray_tracing.svg" alt="Ray Tracing: un rayo sale de la cámara por un píxel, golpea una esfera y lanza un rayo de sombra hacia la luz y un rayo reflejado">
             <figcaption><span class="term">Ray Tracing</span> Del píxel a la escena. Sombras y reflejos físicamente correctos.</figcaption>
+            <button type="button" class="ver-demo" data-video="assets/videos/ray-tracing.mp4" data-title="Ray Tracing">Ver demostración: Ray Tracing</button>
+            <span class="fragment paso-video" aria-hidden="true"></span>
           </figure>
         </div>
         <div class="ecuacion fragment fade-up">
@@ -205,7 +209,7 @@
             <p class="terms"><span class="term">Mitsuba 3</span> <span class="term">ETR</span> <span class="placeholder">[stack completo]</span></p>
           </article>
           <article class="proyecto proyecto-neural fragment fade-up">
-            <img src="assets/images/proy_chris_lwir.png" alt="Cuadrícula de vistas sintetizadas de un objeto en infrarrojo de onda larga">
+            <img class="demo-entera" src="assets/images/christian.gif" alt="Animación en infrarrojo de onda larga: una escena vista desde arriba mientras la cámara gira a su alrededor">
             <p class="autor">Chris Orduz <span class="estado">en curso</span></p>
             <h3>Nuevas vistas térmicas guiadas por la física</h3>
             <p>Síntesis de vistas en infrarrojo de onda larga con <span class="term">3D Gaussian Splatting</span> guiado por la física.</p>
@@ -221,6 +225,27 @@
         </div>
         <aside class="notes">
           Tres proyectos de grado en curso, todos con luz fuera del espectro visible. Jorge simula imágenes térmicas resolviendo la ecuación de transferencia radiativa en Mitsuba 3: en el video la cámara da una vuelta completa alrededor de cinco materiales medidos mientras la banda va de 8 a 10 micras y regresa; el aire y el cielo cambian con la longitud de onda. El aluminio parece frío porque casi no emite y refleja el cielo a menos veinte grados. Chris y Juanda usan 3D Gaussian Splatting: Chris en infrarrojo con restricciones físicas, Juanda con imágenes hiperespectrales y desmezclado espectral. Pendiente: confirmar el stack de cada uno (info/*.yml) y si el proyecto de Juan Toloza entra aquí.
+        </aside>
+      </section>
+
+      <!-- 06b · Proyecto de Juan Toloza. Its own slide: two demos and a long title do not fit a card of 06. -->
+      <section id="proyecto-toloza" data-section="projects">
+        <header class="slide-head">
+          <p class="autor line-engines">Juan Toloza</p>
+          <h2>Simulación del proceso de adquisición de imágenes transitorias en escenarios sin línea de visión usando el motor de renderizado Mitsuba</h2>
+        </header>
+        <div class="toloza-demos">
+          <figure class="fragment fade-up">
+            <img src="assets/images/spline.gif" alt="Editor 3D de la escena: una esfera oculta detrás de un muro divisor, la cámara frente a la pared y una trayectoria de nodos amarillos que se anima">
+            <figcaption>La escena <span class="term">NLOS</span>: el objeto queda oculto tras el muro y la trayectoria (<span class="term">spline</span>) define su movimiento.</figcaption>
+          </figure>
+          <figure class="fragment fade-up">
+            <img src="assets/images/penumbra_spline.gif" alt="Render en escala de grises de la luz sobre la pared visible; la zona iluminada y su penumbra cambian cuadro a cuadro">
+            <figcaption>Render en <span class="term">Mitsuba</span>: la luz en la pared y su penumbra cambian con el movimiento.</figcaption>
+          </figure>
+        </div>
+        <aside class="notes">
+          Juan Toloza simula con Mitsuba cómo se adquieren imágenes transitorias en escenarios sin línea de visión: la cámara no ve el objeto, solo la luz que rebota en una pared. A la izquierda, la escena en el editor: el objeto está detrás del muro y se mueve por una trayectoria. A la derecha, el render de lo que llega a la pared: la penumbra cambia con el movimiento del objeto oculto. Pendiente: confirmar con Juan el estado del proyecto, su stack y si las leyendas describen bien cada animación (info/toloza.yml está vacío).
         </aside>
       </section>
 
@@ -313,6 +338,19 @@
 
     </div>
   </div>
+
+  <!-- Shared player for the demo videos of slide 05 (.ver-demo buttons, js/script.js).
+       Outside .reveal so Reveal's stage scaling does not shrink it; one <video>, its src set on each open. -->
+  <dialog id="video-modal" class="video-modal" aria-labelledby="video-modal-titulo" tabindex="-1">
+    <div class="video-modal-cuerpo">
+      <header class="video-modal-cabecera">
+        <h2 id="video-modal-titulo" class="video-modal-titulo"></h2>
+        <button type="button" class="video-modal-cerrar">Cerrar <span aria-hidden="true">(Esc)</span></button>
+      </header>
+      <video controls playsinline preload="none"></video>
+      <p class="video-modal-estado" aria-live="polite"></p>
+    </div>
+  </dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
