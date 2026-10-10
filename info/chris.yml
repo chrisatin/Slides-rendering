@@ -3,52 +3,101 @@
 # Leave a field empty rather than guessing: empty fields are left off the slide.
 # On-screen text is Spanish; technical terms stay in English (NeRF, Ray Tracing).
 
-title: ""                 # project name as it should appear on the slide
-short_title: ""           # 2-4 words, for diagrams and tight layouts
+title: "Síntesis de nuevas vistas en el infrarrojo de onda larga con 3D Gaussian Splatting guiado por la física"
+short_title: "Gaussian Splatting térmico"
 authors:
-  - name: ""
-    role: ""              # e.g. estudiante de maestría, director
+  - name: "Christian Isnardo Orduz Picon"
+    role: "estudiante de Ingeniería de Sistemas, UIS"
     email: ""
-advisor: ""
+  - name: "Marian Stefanie Becerra Becerra"
+    role: "estudiante de Ingeniería de Sistemas, UIS"
+    email: ""
+advisor: "Ph.D. Hoover Fabián Rueda Chacón"
 
-line: ""                  # engines | volumetric | neural | engines+neural (sets the slide colour)
-status: ""                # e.g. en curso, terminado, propuesto
-period: ""                # e.g. 2025-2026
+line: "neural"
+status: "propuesto"
+period: ""
 
 concept: >-
+  En el infrarrojo de onda larga (LWIR), lo que llega a la cámara es la
+  radiación que emite cada superficie por su temperatura, más la que refleja
+  del entorno y la que aporta el aire en el camino. El proyecto adapta
+  3D Gaussian Splatting para sintetizar vistas nuevas de escenas en LWIR a
+  partir de pocas imágenes hiperespectrales, con ese modelo físico dentro de
+  la optimización.
 
+problem: >-
+  NeRF y 3DGS se diseñaron para imágenes RGB. ThermoNeRF y ThermalGaussian
+  llevan la síntesis de vistas al térmico, pero interpolan la radiancia medida
+  como si fuera color. Thermal3D-GS añade restricciones físicas, aunque no
+  separa la emisión propia, la reflexión del entorno y el aporte del medio.
+  En LWIR esa separación importa: un vidrio transparente en el visible es
+  opaco en el térmico, y la intensidad medida depende de la temperatura y de
+  la emisividad de cada material.
 
-problem: >-               # the main challenge the project tackles
+approach: >-
+  Primero se modela la formación de la imagen LWIR con las leyes de Planck,
+  Kirchhoff y Beer-Lambert, teniendo en cuenta la posición de la cámara, el
+  ángulo de visión, la reflexión y la atenuación atmosférica. Ese modelo pasa
+  a las propiedades de cada gaussiana y a la función de pérdida, así la
+  optimización queda restringida por emisión, reflexión y atenuación. El
+  algoritmo se implementa en Python y se compara con ThermoNeRF y
+  ThermalGaussian usando PSNR, SSIM y LPIPS sobre vistas no vistas en el
+  entrenamiento.
 
+keywords:
+  - 3D Gaussian Splatting
+  - Novel View Synthesis
+  - LWIR
+  - Hyperspectral Imaging
+  - Planck's Law
+  - Emissivity
+  - Beer-Lambert Law
+  - Alpha Blending
+math:
+  - 'B(\lambda, T) = \frac{2hc^2}{\lambda^5} \frac{1}{e^{hc/\lambda k T} - 1}'
+  - '\rho + \alpha + \tau = 1, \quad \varepsilon = \alpha'
+  - '\tau(\lambda, d) = \frac{I_d(\lambda)}{I_0(\lambda)} = e^{-\gamma(\lambda) d}'
+  - '\Sigma = R S S^T R^T'
+  - 'C = \sum_{i \in \mathcal{N}} c_i \alpha_i \prod_{j=1}^{i-1} (1 - \alpha_j)'
+tech_stack:
+  - Python
 
-approach: >-              # how it is solved, in 2-3 sentences
+results: []
 
+media:
+  - path: "assets/images/proy_chris_espectro.png"
+    caption: "Cubo hiperespectral LWIR: banda de 10,35 µm y espectro de radiancia de un píxel en todo el rango LWIR"
+    kind: "chart"
+  - path: "assets/images/proy_chris_lwir.png"
+    caption: "Un mismo objeto visto desde 20 posiciones de cámara en LWIR"
+    kind: "render"
 
-keywords: []              # English technical terms to highlight (e.g. Path Tracing, 3D Gaussian Splatting)
-math: []                  # key equations in LaTeX, without $ (e.g. "L_o = L_e + \int f_r L_i \cos\theta \, d\omega")
-tech_stack: []            # e.g. C++, CUDA, PyTorch, OpenGL, Mitsuba 3
-
-results: []               # only real, verifiable results
-#  - claim: ""
-#    value: ""
-#    source: ""           # paper, run, data/results/<file>.json
-
-media: []                 # images and videos for the slide
-#  - path: ""             # assets/images/..., assets/videos/... or assets/extracted_resources/...
-#    caption: ""
-#    kind: ""             # render | diagram | chart | video
-
-code:                     # optional, for diff-math-formatter
+code:
   repo: ""
-  base: ""                # upstream commit, tag or branch
-  files: []               # files worth showing on a slide
+  base: ""
+  files: []
 
 links: []
-#  - label: ""            # e.g. repositorio, paper, demo
-#    url: ""
 
-why_join: >-              # what a new student would learn or do here
+why_join: >-
+  Trabajarías con radiometría de verdad (Planck, emisividad, atenuación del
+  aire) y la meterías dentro de un método de rasterización diferenciable que
+  se entrena por gradiente. Es una buena puerta de entrada al infrarrojo y a
+  los modelos de renderizado guiados por la física.
 
-
-notes_for_agent: >-       # anything else: what to emphasise, what to avoid
-
+notes_for_agent: >-
+  Fuente: plan de trabajo de grado presentado el 10 de octubre de 2026
+  (modalidad trabajo de investigación, 16 semanas, cinco fases). Todavía no
+  hay resultados: no inventes métricas ni comparaciones. El plan no fija
+  fechas de inicio ni de fin, por eso period está vacío; confirmarlo con los
+  autores. Tampoco trae correos. Elegí line "neural" porque la base es 3DGS;
+  el modelo de atenuación (Beer-Lambert) toca la línea volumétrica, cambiarlo
+  a otra si el director lo ubica distinto. La ecuación de Planck del plan
+  incluye un factor 2 \times 10^{-4} de conversión de unidades; aquí va la
+  forma estándar. Lo que conviene destacar en la diapositiva es la pregunta
+  de investigación: cómo meter el modelo físico de propagación de radiación
+  LWIR (emisión, reflexión, medio) dentro de 3DGS. Los pies de foto de las
+  imágenes salen de lo que se ve en ellas (ejes y títulos de la gráfica);
+  confirmar con los autores que son datos del proyecto y de qué base de
+  datos vienen.

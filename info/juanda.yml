@@ -3,52 +3,103 @@
 # Leave a field empty rather than guessing: empty fields are left off the slide.
 # On-screen text is Spanish; technical terms stay in English (NeRF, Ray Tracing).
 
-title: ""                 # project name as it should appear on the slide
-short_title: ""           # 2-4 words, for diagrams and tight layouts
+title: "Síntesis de nuevas vistas y segmentación de materiales en imágenes espectrales con Gaussian Splatting y desmezclado espectral"
+short_title: "Gaussian Splatting espectral"
 authors:
-  - name: ""
-    role: ""              # e.g. estudiante de maestría, director
+  - name: "Juan David Vanegas Echeverria"
+    role: "estudiante de Ingeniería de Sistemas, UIS"
     email: ""
-advisor: ""
+  - name: "David Steven Anaya González"
+    role: "estudiante de Ingeniería de Sistemas, UIS"
+    email: ""
+advisor: "Ph.D. Hoover Fabián Rueda Chacón"
 
-line: ""                  # engines | volumetric | neural | engines+neural (sets the slide colour)
-status: ""                # e.g. en curso, terminado, propuesto
-period: ""                # e.g. 2025-2026
+line: "neural"
+status: "propuesto"
+period: ""
 
 concept: >-
+  Una imagen hiperespectral registra la radiancia en muchas bandas estrechas,
+  y con ellas la firma espectral de cada material. El proyecto extiende
+  3D Gaussian Splatting a imágenes espectrales y guarda en cada gaussiana
+  parámetros de desmezclado espectral, para sintetizar vistas nuevas de la
+  escena y saber a la vez de qué materiales está hecha.
 
+problem: >-
+  3DGS representa la apariencia con tres canales RGB, que no alcanzan para
+  separar materiales de color parecido. HyperGS y DD-HGS llevan 3DGS al
+  dominio hiperespectral, pero codifican el espectro con redes MLP de caja
+  negra. SpectralGaussians modela la iluminación por banda y necesita SAM
+  para segmentar. Ninguno usa la firma espectral para identificar de forma
+  nativa los componentes puros de la escena (endmembers). A esto se suma que
+  hay pocos conjuntos de datos multivista con información espectral.
 
-problem: >-               # the main challenge the project tackles
+approach: >-
+  Cada gaussiana guarda parámetros explícitos del Extended Linear Mixing
+  Model (ELMM) en lugar de un color: abundancias sobre un conjunto de firmas
+  de referencia. La implementación parte del código oficial de 3DGS, que se
+  modifica para procesar imágenes espectrales y estimar esas firmas y
+  abundancias durante la optimización. Se evalúa contra 3DGS, HyperGS,
+  SpectralGaussians y UnMix-NeRF con métricas de imagen (PSNR, SSIM, LPIPS)
+  y de fidelidad espectral (SAM, RMSE).
 
+keywords:
+  - 3D Gaussian Splatting
+  - Novel View Synthesis
+  - Hyperspectral Imaging
+  - Spectral Unmixing
+  - Extended Linear Mixing Model (ELMM)
+  - Endmembers
+  - Material Segmentation
+  - Mitsuba 3
+math:
+  - 'x_n = \sum_{k=1}^{P} a_{kn} \, \psi_{kn} \, s_k + e_n, \quad a_{kn} \ge 0, \quad \sum_{k=1}^{P} a_{kn} = 1'
+  - 'C = \sum_{i \in \mathcal{N}} c_i \alpha_i \prod_{j=1}^{i-1} (1 - \alpha_j)'
+tech_stack:
+  - Python
+  - PyTorch
+  - CUDA
+  - Mitsuba 3
 
-approach: >-              # how it is solved, in 2-3 sentences
+results: []
 
+media:
+  - path: "assets/images/proy_juanda_hsi.png"
+    caption: "Escena sintética de interior"
+    kind: "render"
+  - path: "assets/images/proy_juanda_hsi2.png"
+    caption: "Escena sintética de interior, otra vista"
+    kind: "render"
 
-keywords: []              # English technical terms to highlight (e.g. Path Tracing, 3D Gaussian Splatting)
-math: []                  # key equations in LaTeX, without $ (e.g. "L_o = L_e + \int f_r L_i \cos\theta \, d\omega")
-tech_stack: []            # e.g. C++, CUDA, PyTorch, OpenGL, Mitsuba 3
-
-results: []               # only real, verifiable results
-#  - claim: ""
-#    value: ""
-#    source: ""           # paper, run, data/results/<file>.json
-
-media: []                 # images and videos for the slide
-#  - path: ""             # assets/images/..., assets/videos/... or assets/extracted_resources/...
-#    caption: ""
-#    kind: ""             # render | diagram | chart | video
-
-code:                     # optional, for diff-math-formatter
+code:
   repo: ""
-  base: ""                # upstream commit, tag or branch
-  files: []               # files worth showing on a slide
+  base: "https://github.com/graphdeco-inria/gaussian-splatting"
+  files: []
 
 links: []
-#  - label: ""            # e.g. repositorio, paper, demo
-#    url: ""
 
-why_join: >-              # what a new student would learn or do here
+why_join: >-
+  Aprenderías desmezclado espectral, una herramienta clásica de percepción
+  remota, y cómo convertirla en parámetros que se optimizan dentro de un
+  renderizador diferenciable. También trabajarías sobre el código oficial de
+  3DGS y con Mitsuba 3 para fabricar escenas con firmas y máscaras conocidas.
 
-
-notes_for_agent: >-       # anything else: what to emphasise, what to avoid
-
+notes_for_agent: >-
+  Fuente: plan de trabajo de grado presentado el 9 de octubre de 2026
+  (modalidad trabajo de investigación, 16 semanas, cuatro fases). Todavía no
+  hay resultados: no inventes métricas. El plan no fija fechas de inicio ni
+  de fin, por eso period está vacío; tampoco trae correos. La pregunta de
+  investigación es cómo obtener una representación 3D interpretable de los
+  materiales de una escena hiperespectral con Gaussian Splatting y
+  parámetros explícitos del ELMM; esa es la idea a destacar. El plan no
+  escribe la ecuación del ELMM: la de math es la forma estándar de Drumetz
+  et al. (referencia [4] del plan), confirmar con los autores que es la que
+  usan antes de ponerla en pantalla. PyTorch y CUDA salen de que parten del
+  código oficial de 3DGS, no del plan. El dataset sintético con Mitsuba 3
+  aparece como objetivo específico, pero la metodología (6.4) lo deja
+  condicionado a que haya tiempo; no presentarlo como hecho. Gancho para
+  reclutar: UnMix-NeRF (ICCV 2025), que el plan cita como antecedente, tiene
+  al director H. Rueda-Chacón como coautor; links está vacío porque el plan
+  no da URL, agregar la del paper si se tiene. Los pies de foto de las imágenes describen solo lo que se ve;
+  confirmar con los autores qué muestran las dos mitades de cada imagen
+  (bandas, verdad de terreno frente a render) antes de usarlas.
