@@ -51,7 +51,8 @@ SLIDE_BG = '#0B0F19'
 # ---------------------------------------------------------------- manifest
 
 def _rel(path):
-    return os.path.relpath(path, ROOT)
+    # Always forward slashes: the manifest and its commands must read the same on Windows and Linux.
+    return os.path.relpath(path, ROOT).replace(os.sep, '/')
 
 
 def _static_outputs():
