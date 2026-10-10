@@ -721,11 +721,13 @@ body {
 
 .reveal .convergencia .rayo-engines { stroke: var(--color-engines); }
 .reveal .convergencia .rayo-neural { stroke: var(--color-neural); }
+.reveal .convergencia .rayo-inverse { stroke: var(--color-text-muted); }
 .reveal .convergencia .rayo-meta { stroke: var(--color-text-code); stroke-width: 5; }
 .reveal .convergencia .rayo-meta-punta { fill: var(--color-text-code); opacity: 0; }
 
-/* The two lines draw first, then they merge into the beam: the order tells the strategy. */
+/* The three lines draw first, then they merge into the beam: the order tells the strategy. */
 .reveal section.present .convergencia .rayo-engines,
+.reveal section.present .convergencia .rayo-inverse,
 .reveal section.present .convergencia .rayo-neural {
   animation: rayo-dibuja 1.2s var(--ease-standard) 0.2s forwards;
 }
@@ -750,6 +752,7 @@ body {
 
 .reveal .convergencia .etq-engines { fill: var(--color-engines-text); }
 .reveal .convergencia .etq-neural { fill: var(--color-neural); }
+.reveal .convergencia .etq-inverse { fill: var(--color-text); }
 .reveal .convergencia .etq-meta { fill: var(--color-text); font-size: 30px; font-weight: 700; }
 
 .reveal .etapas {
@@ -782,7 +785,7 @@ body {
 
 /* ------------------------------------------------------------ 08 pitch */
 
-/* Asymmetric on purpose: the one verified result gets the visual weight, the reasons sit beside it. */
+/* Asymmetric on purpose: the verified results get the visual weight, the reasons sit beside them. */
 .reveal .pitch {
   display: grid;
   grid-template-columns: 520px 1fr;
@@ -790,13 +793,24 @@ body {
   height: 100%;
 }
 
+/* Two verified results stacked: each tile is its media with the place number over it. */
+.reveal .logros {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+
 .reveal .logro {
   position: relative;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
   border-radius: var(--radius-card);
 }
 
-.reveal .logro img {
+.reveal .logro img,
+.reveal .logro video {
   width: 100%;
   height: 100%;
   max-height: none;
@@ -807,30 +821,43 @@ body {
 .reveal .logro figcaption {
   position: absolute;
   inset: auto 0 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 120px 28px 28px;
-  background: linear-gradient(to top, rgba(11, 15, 25, 0.95) 45%, rgba(11, 15, 25, 0));
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: end;
+  column-gap: 16px;
+  row-gap: 4px;
+  padding: 64px 20px 16px;
+  background: linear-gradient(to top, rgba(11, 15, 25, 0.95) 55%, rgba(11, 15, 25, 0));
 }
 
 .reveal .logro .numero {
+  grid-row: span 2;
   font-family: var(--font-heading);
-  font-size: 128px;
+  font-size: 76px;
   font-weight: 700;
-  line-height: 0.9;
+  line-height: 0.85;
   color: var(--color-text);
 }
 
 .reveal .logro .numero sup { font-size: 0.4em; vertical-align: 0.9em; }
 
 .reveal .logro-texto {
-  font-size: 22px;
+  font-size: 17px;
   line-height: 1.35;
   color: var(--color-text);
 }
 
-.reveal .logro-texto .term { display: inline; font-size: 20px; }
+.reveal .logro-texto .term { display: inline; font-size: 16px; }
+.reveal .logro-texto .placeholder { font-size: 13px; }
+
+/* The one link on the slide: opens the project's interactive 3D model. */
+.reveal .logro-enlace {
+  justify-self: start;
+  font-size: 15px;
+  color: var(--color-text-code);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 .reveal .razones {
   display: flex;
