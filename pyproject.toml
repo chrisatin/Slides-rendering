@@ -1,0 +1,19 @@
+[project]
+name = "rendering"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "jorge1b3", email = "jorge1b3@hotmail.es" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pip>=26.2.1",
+]
+
+[project.scripts]
+rendering = "rendering:main"
+
+[build-system]
+requires = ["uv_build>=0.12.23,<0.13.0"]
+build-backend = "uv_build"

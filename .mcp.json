@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "figure-pipeline": {
+      "command": "python3",
+      "args": ["/home/jorge/Documents/rendering/tools/figures/pipeline_mcp.py"]
+    }
+  }
+}

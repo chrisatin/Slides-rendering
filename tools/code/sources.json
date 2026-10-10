@@ -1,0 +1,6 @@
+{
+  "repo": null,
+  "base": null,
+  "globs": ["src/**/*.cpp", "src/**/*.h", "include/**/*.h"],
+  "counterpart": {}
+}

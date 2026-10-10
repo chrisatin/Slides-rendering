@@ -1,0 +1,64 @@
+{
+  "figures": [
+    {
+      "id": "nerf_pipeline",
+      "source": "diagrams_src/nerf_pipeline.typ",
+      "svg_path": "assets/diagrams/nerf_pipeline.svg",
+      "slide": "#volumetric-neural",
+      "params": {
+        "command": "typst compile --root . --font-path assets/fonts --format svg diagrams_src/nerf_pipeline.typ assets/diagrams/nerf_pipeline.svg",
+        "seconds": 1.4
+      }
+    },
+    {
+      "id": "pilar_motores",
+      "source": "diagrams_src/pilar_motores.typ",
+      "svg_path": "assets/diagrams/pilar_motores.svg",
+      "slide": null,
+      "params": {
+        "command": "typst compile --root . --font-path assets/fonts --format svg diagrams_src/pilar_motores.typ assets/diagrams/pilar_motores.svg",
+        "seconds": 1.1
+      }
+    },
+    {
+      "id": "pilar_neural",
+      "source": "diagrams_src/pilar_neural.typ",
+      "svg_path": "assets/diagrams/pilar_neural.svg",
+      "slide": null,
+      "params": {
+        "command": "typst compile --root . --font-path assets/fonts --format svg diagrams_src/pilar_neural.typ assets/diagrams/pilar_neural.svg",
+        "seconds": 1.1
+      }
+    },
+    {
+      "id": "pilar_volumetrico",
+      "source": "diagrams_src/pilar_volumetrico.typ",
+      "svg_path": "assets/diagrams/pilar_volumetrico.svg",
+      "slide": null,
+      "params": {
+        "command": "typst compile --root . --font-path assets/fonts --format svg diagrams_src/pilar_volumetrico.typ assets/diagrams/pilar_volumetrico.svg",
+        "seconds": 1.1
+      }
+    },
+    {
+      "id": "rasterizacion",
+      "source": "diagrams_src/rasterizacion.typ",
+      "svg_path": "assets/diagrams/rasterizacion.svg",
+      "slide": "#motores-de-renderizado",
+      "params": {
+        "command": "typst compile --root . --font-path assets/fonts --format svg diagrams_src/rasterizacion.typ assets/diagrams/rasterizacion.svg",
+        "seconds": 1.1
+      }
+    },
+    {
+      "id": "ray_tracing",
+      "source": "diagrams_src/ray_tracing.typ",
+      "svg_path": "assets/diagrams/ray_tracing.svg",
+      "slide": null,
+      "params": {
+        "command": "typst compile --root . --font-path assets/fonts --format svg diagrams_src/ray_tracing.typ assets/diagrams/ray_tracing.svg",
+        "seconds": 1.1
+      }
+    }
+  ]
+}

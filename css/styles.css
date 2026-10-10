@@ -1,0 +1,844 @@
+/* Design tokens from DESIGN.md (Cinematic Tech). Dark ground so renders and diagrams carry the color. */
+:root {
+  --color-bg: #0B0F19;
+  --color-surface: #151E2E;
+  --color-border: #334155;
+
+  --color-text: #F8FAFC;
+  --color-text-muted: #94A3B8;
+  --color-text-code: #38BDF8;
+
+  /* Indigo marks the rendering-engines line, pink marks Neural Rendering and CTAs. */
+  --color-engines: #6366F1;
+  --color-neural: #EC4899;
+  /* #6366F1 is 4.29:1 on --color-bg: large text and fills only. Use this for small indigo text (5.6:1 on surface). */
+  --color-engines-text: #818CF8;
+
+  --glow-engines: 0 0 24px rgba(99, 102, 241, 0.3);
+  --glow-neural: 0 0 24px rgba(236, 72, 153, 0.3);
+
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-code: 'Fira Code', 'Roboto Mono', ui-monospace, monospace;
+
+  --stage-padding: 64px;
+  --stage-padding-wide: 80px;
+  --space-section: 40px;
+  --space-list: 16px;
+  --space-tight: 8px;
+
+  --radius-card: 12px;
+  --radius-small: 4px;
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-enter: 0.6s;
+}
+
+html,
+body {
+  background: var(--color-bg);
+}
+
+.reveal-viewport {
+  background: var(--color-bg);
+}
+
+.reveal {
+  font-family: var(--font-body);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal .slides > section {
+  flex-direction: column;
+  height: 100%;
+  padding: var(--stage-padding);
+  box-sizing: border-box;
+  gap: var(--space-section);
+  isolation: isolate;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  font-family: var(--font-heading);
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.reveal h1 { font-size: 72px; font-weight: 700; }
+.reveal h2 { font-size: 48px; font-weight: 700; }
+.reveal h3 { font-size: 30px; font-weight: 500; }
+
+.reveal p { margin: 0; }
+
+.reveal ul,
+.reveal ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-list);
+  margin: 0;
+  padding-left: 1.2em;
+  font-weight: 500;
+}
+
+.reveal strong { color: var(--color-text); font-weight: 500; }
+
+/* English technical terms (NeRF, Ray Tracing) and algorithm or paper names. */
+.reveal .term,
+.reveal code {
+  font-family: var(--font-code);
+  font-size: 0.9em;
+  color: var(--color-text-code);
+}
+
+.reveal pre {
+  margin: 0;
+  padding: 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: none;
+  font-size: 20px;
+}
+
+.reveal pre code {
+  max-height: none;
+  padding: 0;
+  font-family: var(--font-code);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  background: none;
+}
+
+/* Diff excerpts (tools/code/cpp_snippet_diff.py): our lines bright, upstream lines muted, replaced lines struck. */
+.reveal .hljs-addition { color: var(--color-text); }
+.reveal .hljs-deletion {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-border);
+}
+
+.reveal .hljs-keyword,
+.reveal .hljs-built_in,
+.reveal .hljs-type { color: var(--color-engines-text); }
+.reveal .hljs-string,
+.reveal .hljs-number { color: var(--color-text-code); }
+.reveal .hljs-comment { color: var(--color-text-muted); font-style: italic; }
+
+.reveal .hljs-ln-numbers {
+  padding-right: 16px;
+  color: var(--color-border);
+  user-select: none;
+}
+
+/* Default pattern: excerpt above, a table of line numbers and their mathematics below. */
+.reveal .code-math {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 22px;
+}
+
+.reveal .code-math td {
+  padding: var(--space-tight) var(--space-list);
+  border-top: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.reveal .code-math td:first-child {
+  width: 4em;
+  font-family: var(--font-code);
+  color: var(--color-text-code);
+  text-align: center;
+}
+
+/* Compact pattern: at most ten short lines, one line of mathematics beside each. */
+.reveal .code-beside {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-section);
+  align-items: start;
+}
+
+.reveal .code-beside .math-lines {
+  display: grid;
+  grid-auto-rows: 1.5em;
+  padding-top: 24px;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.reveal .card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 32px;
+}
+
+.reveal img,
+.reveal video {
+  border-radius: var(--radius-card);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.reveal .line-engines { color: var(--color-engines-text); }
+.reveal .line-neural { color: var(--color-neural); }
+
+/* Content the owner still has to provide (R-38): dashed and monospaced so it never reads as final. */
+.reveal .placeholder {
+  display: inline-block;
+  padding: 2px 10px;
+  border: 1px dashed var(--color-text-muted);
+  border-radius: var(--radius-small);
+  font-family: var(--font-code);
+  font-size: 0.8em;
+  color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------ shared slide parts */
+
+.reveal .slide-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+}
+
+.reveal .sub {
+  font-size: 24px;
+  color: var(--color-text-muted);
+}
+
+.reveal figure { margin: 0; }
+
+.reveal figcaption {
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
+.reveal figcaption .term {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 20px;
+}
+
+.reveal .terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 18px;
+}
+
+.reveal .terms .term { font-size: 18px; }
+
+.reveal .math-line { color: var(--color-text); font-size: 26px; }
+.reveal .math-line .katex-display { margin: 0; }
+
+/* Identity motif: a ray of light (cyan, the deck's colour for light) that draws itself when its slide enters. */
+.reveal .rayo polyline,
+.reveal .convergencia polyline {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.reveal .rayo polyline { stroke: var(--color-text-code); }
+
+.reveal section.present .rayo polyline {
+  animation: rayo-dibuja 1.4s var(--ease-standard) 0.3s forwards;
+}
+
+@keyframes rayo-dibuja {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ------------------------------------------------------------ 01 portada */
+
+/* Dark scrim on the left only, so the title keeps AA contrast over the haze of the render.
+   It sits on Reveal's background layer (the first slide's), which covers the whole viewport. */
+.reveal .backgrounds > .slide-background:first-child .slide-background-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(11, 15, 25, 0.92) 0%, rgba(11, 15, 25, 0.75) 38%, rgba(11, 15, 25, 0) 62%);
+}
+
+.reveal .portada {
+  justify-content: center;
+}
+
+.reveal .portada-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 780px;
+}
+
+.reveal .portada h1 {
+  font-size: 68px;
+  letter-spacing: -0.02em;
+}
+
+.reveal .portada .lede {
+  max-width: 600px;
+  font-size: 26px;
+  color: var(--color-text);
+}
+
+.reveal .rayo-portada {
+  width: 420px;
+  height: 60px;
+  overflow: visible;
+}
+
+.reveal .portada .grupo {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.reveal .portada .credito {
+  position: absolute;
+  right: var(--stage-padding);
+  bottom: 32px;
+  font-size: 16px;
+  color: var(--color-text-muted);
+}
+
+.reveal .portada .credito .term { font-size: 16px; }
+
+/* ------------------------------------------------------------ 02 aplicaciones */
+
+.reveal .aplicaciones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 0;
+  list-style: none;
+  font-weight: 400;
+}
+
+.reveal .aplicaciones li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reveal .aplicaciones img {
+  width: 100%;
+  height: 262px;
+  object-fit: cover;
+}
+
+.reveal .aplicaciones h3 { font-size: 26px; }
+.reveal .aplicaciones p { font-size: 20px; line-height: 1.4; }
+.reveal .aplicaciones p .term { font-size: 18px; }
+
+/* ------------------------------------------------------------ 03 pilares */
+
+/* Three equal columns on purpose: the three lines carry the same weight in the group. Each takes its line colour. */
+.reveal .pilares {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex: 1;
+}
+
+.reveal .pilar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 28px;
+  border-left: 1px solid var(--color-border);
+}
+
+.reveal .pilar:first-child { padding-left: 0; border-left: none; }
+
+.reveal .pilar img {
+  height: 150px;
+  object-fit: contain;
+  object-position: left center;
+  border-radius: 0;
+  margin-bottom: 10px;
+}
+
+.reveal .pilar p { font-size: 22px; line-height: 1.45; }
+.reveal .pilar-motores h3 { color: var(--color-engines-text); }
+.reveal .pilar-volumen h3 { color: var(--color-text-code); }
+.reveal .pilar-neural h3 { color: var(--color-neural); }
+
+/* ------------------------------------------------------------ 04 motores */
+
+.reveal #motores-de-renderizado { gap: 28px; }
+
+.reveal .comparacion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-section);
+}
+
+.reveal .comparacion figure {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reveal .comparacion figcaption { font-size: 18px; }
+
+.reveal .comparacion img {
+  height: 215px;
+  object-fit: contain;
+  object-position: left bottom;
+  border-radius: 0;
+}
+
+.reveal .ecuacion {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-section);
+  padding: 14px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.reveal .ecuacion .math-line { font-size: 20px; }
+.reveal .ecuacion p { font-size: 18px; line-height: 1.4; }
+
+/* ------------------------------------------------------------ 05 neural */
+
+.reveal #volumetric-neural { gap: 24px; }
+
+.reveal .neural-grid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: var(--space-section);
+}
+
+.reveal .neural-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reveal .explicito-implicito {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+}
+
+.reveal .explicito-implicito dt {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.reveal .explicito-implicito dd {
+  margin: 2px 0 0;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.reveal .neural-texto .math-line { font-size: 21px; }
+.reveal .nota-3dgs { font-size: 20px; line-height: 1.4; }
+
+.reveal .neural-abajo {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  align-items: end;
+  gap: var(--space-section);
+}
+
+.reveal .flujo-nerf {
+  width: 100%;
+  max-height: 230px;
+  object-fit: contain;
+  object-position: left bottom;
+  border-radius: 0;
+}
+
+.reveal .neural-resultado {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reveal .neural-resultado img {
+  height: 196px;
+  object-fit: cover;
+}
+
+.reveal .neural-resultado figcaption { font-size: 16px; }
+.reveal .neural-resultado figcaption .term { display: inline; font-size: 16px; }
+
+/* ------------------------------------------------------------ 06 proyectos */
+
+.reveal .proyectos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.reveal .proyecto {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.reveal .proyecto img,
+.reveal .proyecto video {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--radius-small);
+  background: #fff;
+}
+
+/* Dark while the video loads, so the card does not flash white. */
+.reveal .proyecto video { background: var(--color-bg); object-position: center; }
+
+.reveal .render-lwir {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
+/* Legend of the LWIR render: the inferno colormap of the thesis (data/results/proy_jorge_lwir.json). */
+.reveal .escala {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-code);
+  font-size: 13px;
+}
+
+.reveal .escala-barra {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #000004, #420a68, #932667, #dd513a, #fca50a, #fcffa4);
+}
+
+/* Real status of every project (all in progress), not decoration. */
+.reveal .estado {
+  margin-left: 6px;
+  color: var(--color-text-muted);
+}
+
+.reveal .proyecto .autor {
+  font-family: var(--font-code);
+  font-size: 16px;
+}
+
+.reveal .proyecto-volumen .autor { color: var(--color-text-code); }
+.reveal .proyecto-neural .autor { color: var(--color-neural); }
+
+.reveal .proyecto h3 { font-size: 23px; line-height: 1.2; }
+.reveal .proyecto p { font-size: 18px; line-height: 1.4; }
+.reveal .proyecto p .term { font-size: 16px; }
+.reveal .proyecto .terms { margin-top: auto; font-size: 16px; }
+.reveal .proyecto .placeholder { font-size: 14px; }
+
+/* ------------------------------------------------------------ 07 visión */
+
+.reveal .convergencia {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.reveal .convergencia .rayo-engines { stroke: var(--color-engines); }
+.reveal .convergencia .rayo-neural { stroke: var(--color-neural); }
+.reveal .convergencia .rayo-meta { stroke: var(--color-text-code); stroke-width: 5; }
+.reveal .convergencia .rayo-meta-punta { fill: var(--color-text-code); opacity: 0; }
+
+/* The two lines draw first, then they merge into the beam: the order tells the strategy. */
+.reveal section.present .convergencia .rayo-engines,
+.reveal section.present .convergencia .rayo-neural {
+  animation: rayo-dibuja 1.2s var(--ease-standard) 0.2s forwards;
+}
+
+.reveal section.present .convergencia .rayo-meta {
+  animation: rayo-dibuja 1s var(--ease-standard) 1.4s forwards;
+}
+
+.reveal section.present .convergencia .rayo-meta-punta {
+  animation: aparece 0.3s linear 2.3s forwards;
+}
+
+@keyframes aparece {
+  to { opacity: 1; }
+}
+
+.reveal .convergencia .etq {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.reveal .convergencia .etq-engines { fill: var(--color-engines-text); }
+.reveal .convergencia .etq-neural { fill: var(--color-neural); }
+.reveal .convergencia .etq-meta { fill: var(--color-text); font-size: 30px; font-weight: 700; }
+
+.reveal .etapas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding: 0;
+  list-style: none;
+  font-weight: 400;
+}
+
+.reveal .etapas li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+}
+
+.reveal .etapas li:last-child { border-top-color: var(--color-text-code); }
+
+.reveal .etapa {
+  font-family: var(--font-code);
+  font-size: 18px;
+  color: var(--color-text-code);
+}
+
+.reveal .etapas p { font-size: 20px; line-height: 1.4; }
+.reveal .etapas p .term { font-size: 18px; }
+
+/* ------------------------------------------------------------ 08 pitch */
+
+/* Asymmetric on purpose: the one verified result gets the visual weight, the reasons sit beside it. */
+.reveal .pitch {
+  display: grid;
+  grid-template-columns: 520px 1fr;
+  gap: 56px;
+  height: 100%;
+}
+
+.reveal .logro {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}
+
+.reveal .logro img {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.reveal .logro figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 120px 28px 28px;
+  background: linear-gradient(to top, rgba(11, 15, 25, 0.95) 45%, rgba(11, 15, 25, 0));
+}
+
+.reveal .logro .numero {
+  font-family: var(--font-heading);
+  font-size: 128px;
+  font-weight: 700;
+  line-height: 0.9;
+  color: var(--color-text);
+}
+
+.reveal .logro .numero sup { font-size: 0.4em; vertical-align: 0.9em; }
+
+.reveal .logro-texto {
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--color-text);
+}
+
+.reveal .logro-texto .term { display: inline; font-size: 20px; }
+
+.reveal .razones {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}
+
+.reveal .razones ol {
+  gap: 26px;
+  padding: 0;
+  list-style: none;
+  font-weight: 400;
+}
+
+.reveal .razones h3 { font-size: 28px; margin-bottom: 6px; }
+.reveal .razones p { font-size: 21px; line-height: 1.4; }
+
+/* ------------------------------------------------------------ 09 cierre */
+
+.reveal .cierre {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  align-items: center;
+  gap: 64px;
+  height: 100%;
+}
+
+.reveal .cierre-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.reveal .preguntas { font-size: 96px; letter-spacing: -0.02em; }
+
+.reveal .contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+}
+
+.reveal .contacto div {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: baseline;
+}
+
+.reveal .contacto dt {
+  font-family: var(--font-code);
+  font-size: 18px;
+  color: var(--color-text-code);
+}
+
+.reveal .contacto dd { margin: 0; justify-self: start; }
+
+/* The CTA slide is the one place the neural pink marks an action (DESIGN.md: CTAs). */
+.reveal .qr.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 300px;
+  height: 300px;
+  padding: 24px;
+  border: 2px dashed var(--color-neural);
+  border-radius: var(--radius-card);
+  font-size: 18px;
+  text-align: center;
+  color: var(--color-text);
+}
+
+/* Fragments: DESIGN.md "Fade-In Up". Use class="fragment fade-up" on text and list items. */
+.reveal .slides section .fragment {
+  transition:
+    opacity var(--duration-enter) var(--ease-standard),
+    transform var(--duration-enter) var(--ease-standard),
+    visibility var(--duration-enter);
+}
+
+.reveal .slides section .fragment.fade-up {
+  transform: translate(0, 24px);
+}
+
+.reveal .slides section .fragment.fade-up.visible {
+  transform: none;
+}
+
+/* Glow is capped at 1-2 elements per slide (antislop R-13): the focal node or the active code line. */
+.reveal .glow-engines { box-shadow: var(--glow-engines); }
+.reveal .glow-neural { box-shadow: var(--glow-neural); }
+
+.reveal .glow-pulse {
+  animation: pulse-glow 2.4s var(--ease-standard) infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from { box-shadow: 0 0 8px rgba(236, 72, 153, 0.15); }
+  to { box-shadow: 0 0 28px rgba(236, 72, 153, 0.45); }
+}
+
+/* Deep Dive slides only (4 and 5): a slow-scrolling grid that suggests computation. Owner-approved R-07 exception. */
+.reveal .slides > section.data-flow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(51, 65, 85, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(51, 65, 85, 0.35) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+  animation: data-flow-scroll 24s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes data-flow-scroll {
+  to { background-position: 48px 48px; }
+}
+
+/* Reveal's default controls and progress bar inherit the engines accent instead of Reveal's blue. */
+.reveal .controls { color: var(--color-engines-text); }
+.reveal .progress { color: var(--color-engines); }
+
+.reveal .slide-number {
+  background: transparent;
+  font-family: var(--font-code);
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.reveal a:focus-visible,
+.reveal button:focus-visible,
+.reveal .controls button:focus-visible {
+  outline: 2px solid var(--color-text-code);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal .glow-pulse,
+  .reveal .slides > section.data-flow::before {
+    animation: none;
+  }
+
+  .reveal .slides section .fragment {
+    transition: opacity 0.2s linear, visibility 0.2s;
+  }
+
+  .reveal .slides section .fragment.fade-up {
+    transform: none;
+  }
+
+  /* Rays appear already drawn. */
+  .reveal section.present .rayo polyline,
+  .reveal section.present .convergencia polyline,
+  .reveal section.present .convergencia .rayo-meta-punta {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}

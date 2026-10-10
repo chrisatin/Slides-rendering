@@ -1,0 +1,54 @@
+# Project card for the recruiting deck. An agent reads it to build the slides
+# "Proyectos actuales" (06) and, where it fits, the Deep Dives (04, 05).
+# Leave a field empty rather than guessing: empty fields are left off the slide.
+# On-screen text is Spanish; technical terms stay in English (NeRF, Ray Tracing).
+
+title: ""                 # project name as it should appear on the slide
+short_title: ""           # 2-4 words, for diagrams and tight layouts
+authors:
+  - name: ""
+    role: ""              # e.g. estudiante de maestría, director
+    email: ""
+advisor: ""
+
+line: ""                  # engines | volumetric | neural | engines+neural (sets the slide colour)
+status: ""                # e.g. en curso, terminado, propuesto
+period: ""                # e.g. 2025-2026
+
+concept: >-
+
+
+problem: >-               # the main challenge the project tackles
+
+
+approach: >-              # how it is solved, in 2-3 sentences
+
+
+keywords: []              # English technical terms to highlight (e.g. Path Tracing, 3D Gaussian Splatting)
+math: []                  # key equations in LaTeX, without $ (e.g. "L_o = L_e + \int f_r L_i \cos\theta \, d\omega")
+tech_stack: []            # e.g. C++, CUDA, PyTorch, OpenGL, Mitsuba 3
+
+results: []               # only real, verifiable results
+#  - claim: ""
+#    value: ""
+#    source: ""           # paper, run, data/results/<file>.json
+
+media: []                 # images and videos for the slide
+#  - path: ""             # assets/images/..., assets/videos/... or assets/extracted_resources/...
+#    caption: ""
+#    kind: ""             # render | diagram | chart | video
+
+code:                     # optional, for diff-math-formatter
+  repo: ""
+  base: ""                # upstream commit, tag or branch
+  files: []               # files worth showing on a slide
+
+links: []
+#  - label: ""            # e.g. repositorio, paper, demo
+#    url: ""
+
+why_join: >-              # what a new student would learn or do here
+
+
+notes_for_agent: >-       # anything else: what to emphasise, what to avoid
+

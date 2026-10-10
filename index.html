@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Línea de Renderizado: El Arte y la Matemática de la Luz</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&family=Inter:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 01 · Portada. The background is our own Mitsuba render (src/rendering/hero_portada.py). -->
+      <section id="portada" data-section="hook" class="portada"
+               data-background-image="assets/images/hero_portada.png"
+               data-background-size="cover" data-background-position="right center">
+        <div class="portada-texto">
+          <h1>El Arte y la Matemática<br>de la Luz</h1>
+          <p class="lede">Simulamos cómo viaja la luz para fabricar imágenes. Y entrenamos redes neuronales para que aprendan a hacerlo desde fotos.</p>
+          <svg class="rayo rayo-portada" viewBox="0 0 420 60" aria-hidden="true">
+            <polyline pathLength="1" points="0,12 150,52 270,8 420,40" />
+          </svg>
+          <p class="grupo">Semillero Hands-on Computer Vision · Línea de Renderizado</p>
+        </div>
+        <p class="credito">Render propio en <span class="term">Mitsuba 3</span>: vidrio, oro y niebla con <span class="term">volpath</span></p>
+        <aside class="notes">
+          Esta imagen no es una foto: la renderizamos nosotros con Mitsuba 3. Un haz de luz atraviesa una niebla tenue, se refracta en una esfera de vidrio y forma una cáustica en el piso. Todo lo que ven sale de resolver ecuaciones de transporte de luz. Hoy les cuento qué hacemos en la línea de renderizado del semillero y por qué vale la pena unirse.
+        </aside>
+      </section>
+
+      <!-- 02 · Para qué sirve -->
+      <section id="para-que-sirve" data-section="why">
+        <header class="slide-head">
+          <h2>El renderizado no es solo para videojuegos</h2>
+          <p class="sub">Cada vez que una máquina necesita ver un mundo que no existe, alguien tiene que renderizarlo.</p>
+        </header>
+        <ul class="aplicaciones">
+          <li class="fragment fade-up">
+            <img src="assets/images/app_conduccion.jpg" alt="Auto autónomo con sensores en una calle urbana">
+            <h3>Simuladores para IA</h3>
+            <p>Datos sintéticos para entrenar autos autónomos sin salir a la calle.</p>
+          </li>
+          <li class="fragment fade-up">
+            <img src="assets/images/app_medica.jpg" alt="Cráneo reconstruido con Volumetric Rendering a partir de una tomografía">
+            <h3>Imágenes médicas</h3>
+            <p><span class="term">Volumetric Rendering</span> de tomografías: ver dentro del cuerpo sin abrirlo.</p>
+          </li>
+          <li class="fragment fade-up">
+            <img src="assets/images/app_vfx.jpg" alt="Personaje digital fotorrealista de la película Avatar">
+            <h3>Cine y VFX</h3>
+            <p>Personajes y mundos fotorrealistas que nunca estuvieron frente a una cámara.</p>
+          </li>
+          <li class="fragment fade-up">
+            <img src="assets/images/app_xr.jpg" alt="Persona usando un visor de realidad mixta">
+            <h3>Realidad mixta</h3>
+            <p>Objetos virtuales iluminados como el cuarto en el que estás.</p>
+          </li>
+        </ul>
+        <aside class="notes">
+          Cuatro ejemplos rápidos. Los autos autónomos se entrenan también con imágenes sintéticas. En medicina, una tomografía es un volumen que se renderiza. En cine, los mundos y personajes digitales son render. Y en realidad mixta, el objeto virtual tiene que iluminarse como tu cuarto para que te lo creas. Imágenes tomadas de cursos de Penn y TUM sobre neural rendering.
+        </aside>
+      </section>
+
+      <!-- 03 · Líneas que trabajamos -->
+      <section id="lineas-actuales" data-section="core-dna">
+        <header class="slide-head">
+          <h2>Tres formas de calcular la luz</h2>
+          <p class="sub">Las tres líneas que trabajamos hoy en el semillero.</p>
+        </header>
+        <div class="pilares">
+          <article class="pilar pilar-motores fragment fade-up">
+            <img src="assets/diagrams/pilar_motores.svg" alt="Un rayo de luz sale de una fuente, rebota en una superficie y llega a la cámara">
+            <h3>Motores de Renderizado</h3>
+            <p>La física de la luz desde cero: rayos, materiales y cámaras.</p>
+            <p class="terms"><span class="term">Ray Tracing</span> <span class="term">Path Tracing</span> <span class="term">BRDF</span></p>
+          </article>
+          <article class="pilar pilar-volumen fragment fade-up">
+            <img src="assets/diagrams/pilar_volumetrico.svg" alt="Un camino de luz entra a un medio participativo y se dispersa varias veces antes de salir">
+            <h3>Volumetric Rendering</h3>
+            <p>Nubes, humo y medios participativos: la luz se dispersa en cada punto del volumen.</p>
+            <p class="terms"><span class="term">Ray Marching</span> <span class="term">ETR</span></p>
+          </article>
+          <article class="pilar pilar-neural fragment fade-up">
+            <img src="assets/diagrams/pilar_neural.svg" alt="Red neuronal multicapa que recibe posición y dirección y devuelve color y densidad">
+            <h3>Neural Rendering</h3>
+            <p>Deep Learning que aprende una escena 3D a partir de fotos.</p>
+            <p class="terms"><span class="term">NeRF</span> <span class="term">3D Gaussian Splatting</span></p>
+          </article>
+        </div>
+        <aside class="notes">
+          Trabajamos en tres líneas. Motores: escribimos la física de la luz desde cero. Volumétrico: cuando la luz no rebota en una superficie sino que se dispersa dentro de un medio, como una nube. Neural: redes que aprenden la escena a partir de fotos. Ojo: la segunda y la tercera usan la misma matemática, y eso lo vamos a ver en dos diapositivas.
+        </aside>
+      </section>
+
+      <!-- 04 · Deep Dive: Motores de Renderizado -->
+      <section id="motores-de-renderizado" data-section="deep-dive-engines" class="data-flow">
+        <header class="slide-head">
+          <h2>¿Cómo se simula un fotón?</h2>
+          <p class="sub">Dos estrategias para decidir qué color lleva cada píxel.</p>
+        </header>
+        <div class="comparacion">
+          <figure class="fragment fade-up">
+            <img src="assets/diagrams/rasterizacion.svg" alt="Rasterization: los vértices de un triángulo se proyectan sobre el plano de imagen y se pintan los píxeles que cubre">
+            <figcaption><span class="term">Rasterization</span> Del objeto al píxel. Rápido: lo que usa tu GPU en un videojuego.</figcaption>
+          </figure>
+          <figure class="fragment fade-up">
+            <img src="assets/diagrams/ray_tracing.svg" alt="Ray Tracing: un rayo sale de la cámara por un píxel, golpea una esfera y lanza un rayo de sombra hacia la luz y un rayo reflejado">
+            <figcaption><span class="term">Ray Tracing</span> Del píxel a la escena. Sombras y reflejos físicamente correctos.</figcaption>
+          </figure>
+        </div>
+        <div class="ecuacion fragment fade-up">
+          <div class="math-line">\[ L_o(\mathbf{x},\omega_o) = L_e(\mathbf{x},\omega_o) + \int_{\Omega} f_r(\mathbf{x},\omega_i,\omega_o)\, L_i(\mathbf{x},\omega_i)\,(\omega_i\cdot\mathbf{n})\,d\omega_i \]</div>
+          <p>La ecuación de renderizado no tiene forma cerrada: la resolvemos con integración Monte Carlo. Aquí se cruzan cálculo, álgebra lineal y probabilidad.</p>
+        </div>
+        <aside class="notes">
+          Rasterization va del objeto al píxel: proyecta triángulos y pinta. Es lo que hace la GPU en un videojuego. Ray Tracing va al revés: desde cada píxel lanza un rayo, y en cada choque pregunta si la luz es visible y qué ve el reflejo. Las dos aproximan la misma ecuación, la de Kajiya: la luz que sale es la emitida más la integral de toda la luz que llega, por el material, por el coseno. Esa integral no se resuelve a mano; se estima con Monte Carlo.
+        </aside>
+      </section>
+
+      <!-- 05 · Deep Dive: Volumetric & Neural Rendering -->
+      <section id="volumetric-neural" data-section="deep-dive-neural" class="data-flow">
+        <header class="slide-head">
+          <h2>De polígonos a redes neuronales</h2>
+          <p class="sub">La misma integral que renderiza una nube sirve para entrenar una <span class="term">NeRF</span>.</p>
+        </header>
+        <div class="neural-grid">
+          <dl class="explicito-implicito">
+            <div class="fragment fade-up">
+              <dt class="line-engines">Explícito</dt>
+              <dd>Triángulos que alguien modela a mano, vértice por vértice.</dd>
+            </div>
+            <div class="fragment fade-up">
+              <dt class="line-neural">Implícito</dt>
+              <dd>Una red \(F_\Theta(\mathbf{x},\mathbf{d}) \to (\mathbf{c},\sigma)\) que aprende la escena desde fotos.</dd>
+            </div>
+          </dl>
+          <div class="neural-texto">
+            <div class="math-line fragment fade-up">\[ C(\mathbf{r}) = \int_{t_n}^{t_f} T(t)\,\sigma(\mathbf{r}(t))\,\mathbf{c}(\mathbf{r}(t),\mathbf{d})\,dt, \qquad T(t) = e^{-\int_{t_n}^{t}\sigma(\mathbf{r}(s))\,ds} \]</div>
+            <p class="fragment fade-up nota-3dgs"><span class="term">3D Gaussian Splatting</span> cambia la red por una nube de gaussianas 3D que se rasterizan en tiempo real.</p>
+          </div>
+        </div>
+        <div class="neural-abajo">
+          <img class="flujo-nerf fragment fade-up" src="assets/diagrams/nerf_pipeline.svg" alt="Entrenamiento de una NeRF: fotos y poses, un rayo por píxel, muestras, MLP, color y densidad, integral de volumen, píxel renderizado, error contra la foto y gradiente que ajusta la red">
+          <figure class="neural-resultado fragment fade-up">
+            <img src="assets/images/nerf_lego.jpg" alt="Excavadora de LEGO renderizada desde una vista nueva por una NeRF">
+            <figcaption>Vista nueva sintetizada por una <span class="term">NeRF</span></figcaption>
+          </figure>
+        </div>
+        <aside class="notes">
+          En gráficos clásicos la escena son triángulos. En Neural Rendering la escena es una función: una red que, para cada punto y dirección, devuelve color y densidad. ¿Cómo se entrena? Con la integral de volumen, la misma que usamos para renderizar nubes: se acumula color a lo largo del rayo, pesado por cuánta luz sobrevive. Se compara el píxel con la foto y el gradiente ajusta la red. 3D Gaussian Splatting llega al mismo resultado con gaussianas explícitas y lo hace en tiempo real.
+        </aside>
+      </section>
+
+      <!-- 06 · Proyectos actuales. Content from the projects in "Rendering - Line's Update". -->
+      <section id="proyectos-actuales" data-section="projects">
+        <header class="slide-head">
+          <h2>Lo que estamos construyendo</h2>
+          <p class="sub">Proyectos de grado, todos en desarrollo: luz más allá de lo visible.</p>
+        </header>
+        <div class="proyectos">
+          <article class="proyecto proyecto-volumen fragment fade-up">
+            <figure class="render-lwir">
+              <video src="assets/videos/proy_jorge_lwir.mp4" poster="assets/images/proy_jorge_lwir.png"
+                     data-autoplay loop muted playsinline
+                     aria-label="Video del render en temperatura de brillo: la cámara da una vuelta completa alrededor de cinco esferas de materiales medidos (pasto, concreto, aluminio, ladrillo, asfalto) entre 25 y 50 grados sobre suelo a 30 grados, mientras la banda va de 8 a 10 micras y regresa; la esfera de aluminio se ve fría porque refleja el cielo"></video>
+              <figcaption class="escala">
+                <span>−20 °C</span><span class="escala-barra" aria-hidden="true"></span><span>50 °C</span>
+              </figcaption>
+            </figure>
+            <p class="autor">Jorge <span class="estado">en curso</span></p>
+            <h3>Simulador espectral en infrarrojo de onda larga</h3>
+            <p>Imágenes LWIR sintéticas resolviendo la ecuación de transferencia radiativa con <span class="term">Volumetric Rendering</span>.</p>
+            <p class="terms"><span class="term">Mitsuba 3</span> <span class="term">ETR</span> <span class="placeholder">[stack completo]</span></p>
+          </article>
+          <article class="proyecto proyecto-neural fragment fade-up">
+            <img src="assets/images/proy_chris_lwir.png" alt="Cuadrícula de vistas sintetizadas de un objeto en infrarrojo de onda larga">
+            <p class="autor">Chris Orduz <span class="estado">en curso</span></p>
+            <h3>Nuevas vistas térmicas guiadas por la física</h3>
+            <p>Síntesis de vistas en infrarrojo de onda larga con <span class="term">3D Gaussian Splatting</span> guiado por la física.</p>
+            <p class="terms"><span class="term">3D Gaussian Splatting</span> <span class="placeholder">[stack]</span></p>
+          </article>
+          <article class="proyecto proyecto-neural fragment fade-up">
+            <img src="assets/images/proy_juanda_hsi.png" alt="Escena interior hiperespectral: imagen de referencia y vista sintetizada lado a lado">
+            <p class="autor">Juanda <span class="estado">en curso</span></p>
+            <h3>3D Gaussian Splatting hiperespectral</h3>
+            <p>Nuevas vistas de imágenes hiperespectrales usando desmezclado espectral.</p>
+            <p class="terms"><span class="term">3D Gaussian Splatting</span> <span class="term">spectral unmixing</span> <span class="placeholder">[stack]</span></p>
+          </article>
+        </div>
+        <aside class="notes">
+          Tres proyectos de grado en curso, todos con luz fuera del espectro visible. Jorge simula imágenes térmicas resolviendo la ecuación de transferencia radiativa en Mitsuba 3: en el video la cámara da una vuelta completa alrededor de cinco materiales medidos mientras la banda va de 8 a 10 micras y regresa; el aire y el cielo cambian con la longitud de onda. El aluminio parece frío porque casi no emite y refleja el cielo a menos veinte grados. Chris y Juanda usan 3D Gaussian Splatting: Chris en infrarrojo con restricciones físicas, Juanda con imágenes hiperespectrales y desmezclado espectral. Pendiente: confirmar el stack de cada uno (info/*.yml) y si el proyecto de Juan Toloza entra aquí.
+        </aside>
+      </section>
+
+      <!-- 07 · Hacia dónde vamos -->
+      <section id="hacia-donde-vamos" data-section="vision">
+        <header class="slide-head">
+          <h2>Hacia dónde vamos</h2>
+          <p class="sub">Juntar el control de un motor físico con lo que una red aprende de las fotos.</p>
+        </header>
+        <svg class="convergencia" viewBox="0 0 1152 260" role="img" aria-labelledby="convergencia-titulo">
+          <title id="convergencia-titulo">Dos rayos, Motores de Renderizado y Neural Rendering, convergen en un solo haz que apunta a Real-time Neural Engines</title>
+          <polyline class="rayo-engines" pathLength="1" points="0,50 360,50 560,130" />
+          <polyline class="rayo-neural" pathLength="1" points="0,210 360,210 560,130" />
+          <polyline class="rayo-meta" pathLength="1" points="560,130 1040,130" />
+          <polygon class="rayo-meta-punta" points="1040,116 1068,130 1040,144" />
+          <text x="0" y="32" class="etq etq-engines">Motores de Renderizado</text>
+          <text x="0" y="250" class="etq etq-neural">Neural Rendering</text>
+          <text x="1068" y="100" text-anchor="end" class="etq etq-meta">Real-time Neural Engines</text>
+        </svg>
+        <ol class="etapas">
+          <li class="fragment fade-up">
+            <span class="etapa">Hoy</span>
+            <p>Simuladores físicos (<span class="term">Mitsuba 3</span>, ETR) y <span class="term">3D Gaussian Splatting</span> espectral, cada uno por su lado.</p>
+          </li>
+          <li class="fragment fade-up">
+            <span class="etapa">Siguiente</span>
+            <p>Escenas neuronales dentro de un motor físico: la red aprende, el motor garantiza la física.</p>
+          </li>
+          <li class="fragment fade-up">
+            <span class="etapa">Meta</span>
+            <p>Motores neuronales en tiempo real, con control explícito sobre luz y materiales.</p>
+          </li>
+        </ol>
+        <aside class="notes">
+          Nuestras dos fortalezas son los motores físicos, que dan control y exactitud, y el Neural Rendering, que aprende escenas desde fotos y corre rápido. La estrategia es juntarlas. Hoy van por separado; lo siguiente es meter escenas neuronales dentro de un motor físico; la meta es un motor neuronal en tiempo real. Pendiente: confirmar si se menciona el grant de NVIDIA y en qué estado está.
+        </aside>
+      </section>
+
+      <!-- 08 · Por qué unirte. The only number on screen is the CVsports result (letter in "Rendering - Line's Update"). -->
+      <section id="por-que-unirte" data-section="pitch">
+        <div class="pitch">
+          <figure class="logro">
+            <img src="assets/images/cvsports_nvs.png" alt="Vista sintetizada de un partido de fútbol, el reto de novel view synthesis de CVsports">
+            <figcaption>
+              <span class="numero">3.<sup>er</sup></span>
+              <span class="logro-texto">puesto en el reto de <span class="term">novel view synthesis</span> de CVsports, workshop de CVPR 2026</span>
+            </figcaption>
+          </figure>
+          <div class="razones">
+            <h2>Por qué unirte</h2>
+            <ol>
+              <li class="fragment fade-up">
+                <h3>Matemática que se ve</h3>
+                <p>Cálculo, álgebra lineal y probabilidad con resultado en pantalla: si la integral está mal, el píxel también.</p>
+              </li>
+              <li class="fragment fade-up">
+                <h3>Habilidades que pide la industria</h3>
+                <p>C++, CUDA, PyTorch y renderizado físico: lo que buscan equipos de gráficos como los de NVIDIA, Epic Games o Apple.</p>
+              </li>
+              <li class="fragment fade-up">
+                <h3>Investigación de frontera</h3>
+                <p>Trabajas con métodos publicados el último año y compites en retos de CVPR.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <aside class="notes">
+          Tres razones. Una: ves tu matemática funcionando, y cuando falla se nota. Dos: lo que aprendes aquí es lo que piden los equipos de gráficos y visión de la industria. Tres: trabajas en la frontera; este año el semillero quedó tercero en el reto de novel view synthesis del workshop CVsports en CVPR 2026, en Denver.
+        </aside>
+      </section>
+
+      <!-- 09 · Preguntas y contacto. Contact details are placeholders until the owner provides them. -->
+      <section id="unete" data-section="cta">
+        <div class="cierre">
+          <div class="cierre-texto">
+            <h2 class="preguntas">¿Preguntas?</h2>
+            <p class="sub">Si te gustó alguna de las tres líneas, escríbenos y te invitamos a la próxima reunión.</p>
+            <dl class="contacto">
+              <div><dt>Correo</dt><dd class="placeholder">[correo de contacto]</dd></div>
+              <div><dt>Reuniones</dt><dd class="placeholder">[día, hora y lugar]</dd></div>
+              <div><dt>Código</dt><dd class="placeholder">[repositorio en GitHub]</dd></div>
+            </dl>
+          </div>
+          <div class="qr placeholder" role="img" aria-label="Espacio reservado para el código QR del formulario de inscripción">[QR: formulario de inscripción]</div>
+        </div>
+        <aside class="notes">
+          Preguntas. Y si alguna de las líneas les llamó la atención, el QR lleva al formulario. Pendiente: correo, horario de reuniones, repositorio y enlace del QR.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
