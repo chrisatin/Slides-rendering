@@ -54,10 +54,10 @@
       "id": "ray_tracing",
       "source": "diagrams_src/ray_tracing.typ",
       "svg_path": "assets/diagrams/ray_tracing.svg",
-      "slide": null,
+      "slide": "#motores-de-renderizado",
       "params": {
         "command": "typst compile --root . --font-path assets/fonts --format svg diagrams_src/ray_tracing.typ assets/diagrams/ray_tracing.svg",
-        "seconds": 1.1
+        "seconds": 0.3
       }
     }
   ]
