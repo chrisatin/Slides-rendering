@@ -17,6 +17,31 @@
   <div class="reveal">
     <div class="slides">
 
+      <!-- 00 · Cubierta: el equipo de Rendering. Photos live in assets/images/<nombre-apellido>.{jpg,png}.
+           A member without a photo keeps the placeholder <div class="retrato" role="img" aria-label="...">;
+           swap it for <img class="retrato" src="assets/images/<nombre>.jpg" alt="Foto de <Nombre>"> when the photo arrives. -->
+      <section id="rendering" data-section="cover" class="cubierta">
+        <div class="cubierta-titulo">
+          <h1>Rendering</h1>
+          <svg class="rayo rayo-cubierta" viewBox="0 0 560 44" aria-hidden="true">
+            <polyline pathLength="1" points="0,34 210,6 340,38 560,14" />
+          </svg>
+          <p class="grupo">Semillero Hands-on Computer Vision · HoCV</p>
+        </div>
+        <ul class="equipo" aria-label="Equipo de la línea de Rendering">
+          <li><figure><img class="retrato" src="assets/images/jorge-garcia.png" alt="Foto de Jorge Garcia"><figcaption>Jorge Garcia</figcaption></figure></li>
+          <li><figure><img class="retrato" src="assets/images/cristian-rey.png" alt="Foto de Cristian Rey"><figcaption>Cristian Rey</figcaption></figure></li>
+          <li><figure><img class="retrato" src="assets/images/samuel-penilla.jpg" alt="Foto de Samuel Penilla"><figcaption>Samuel Penilla</figcaption></figure></li>
+          <li><figure><img class="retrato" src="assets/images/juan%20toloza.png" alt="Foto de Juan Toloza"><figcaption>Juan Toloza</figcaption></figure></li>
+          <li><figure><div class="retrato" role="img" aria-label="Espacio para la foto de Juanda Vanegas"></div><figcaption>Juanda Vanegas</figcaption></figure></li>
+          <li><figure><img class="retrato" src="assets/images/david-anaya.png" alt="Foto de David Anaya"><figcaption>David Anaya</figcaption></figure></li>
+          <li><figure><img class="retrato" src="assets/images/christian-orduz.jpg" alt="Foto de Christian Orduz"><figcaption>Christian Orduz</figcaption></figure></li>
+        </ul>
+        <aside class="notes">
+          Somos el equipo de Rendering del semillero Hands-on Computer Vision. Presentar a cada integrante por su nombre, de izquierda a derecha. En los próximos minutos les mostramos qué hacemos, en qué estamos trabajando y por qué vale la pena unirse.
+        </aside>
+      </section>
+
       <!-- 01 · Portada. The background is our own Mitsuba render (src/rendering/hero_portada.py). -->
       <section id="portada" data-section="hook" class="portada"
                data-background-image="assets/images/hero_portada.png"

@@ -265,11 +265,98 @@ body {
   to { stroke-dashoffset: 0; }
 }
 
+/* ------------------------------------------------------------ 00 cubierta (equipo) */
+
+/* Two faint pools of light on Reveal's background layer for this slide: indigo falling from the top right
+   behind the title, a trace of cyan at the bottom left. The only lighting on the slide; no glow on elements. */
+.reveal .slide-background.cubierta .slide-background-content {
+  background:
+    radial-gradient(ellipse 60% 75% at 92% 0%, rgba(99, 102, 241, 0.24), rgba(99, 102, 241, 0) 70%),
+    radial-gradient(ellipse 45% 55% at 0% 100%, rgba(56, 189, 248, 0.09), rgba(56, 189, 248, 0) 70%),
+    var(--color-bg);
+}
+
+/* Title on top, the seven members in one row at the foot: the name of the line leads, the people sign it. */
+/* section.cubierta, not .cubierta: Reveal copies the class onto the background layer too. */
+.reveal section.cubierta {
+  justify-content: space-between;
+  padding-top: 88px;
+}
+
+.reveal .cubierta-titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reveal .cubierta h1 {
+  font-size: 152px;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+.reveal .rayo-cubierta {
+  width: 560px;
+  height: 44px;
+  overflow: visible;
+}
+
+.reveal .cubierta .grupo {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.reveal .equipo {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.reveal .equipo figure {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 4:5 portrait frame; a real photo (img.retrato) is cropped to fill it, faces kept near the top. */
+.reveal .retrato {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+/* Empty frame: dashed like every other owner-supplied placeholder, with a neutral head-and-shoulders silhouette. */
+.reveal div.retrato {
+  border-style: dashed;
+  background:
+    radial-gradient(circle 26px at 50% 44%, var(--color-border) 98%, transparent 100%),
+    radial-gradient(56px 54px at 50% 100%, var(--color-border) 98%, transparent 100%),
+    var(--color-surface);
+}
+
+.reveal .equipo figcaption {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--color-text);
+}
+
 /* ------------------------------------------------------------ 01 portada */
 
 /* Dark scrim on the left only, so the title keeps AA contrast over the haze of the render.
-   It sits on Reveal's background layer (the first slide's), which covers the whole viewport. */
-.reveal .backgrounds > .slide-background:first-child .slide-background-content::after {
+   It sits on Reveal's background layer for this slide (Reveal copies the slide's classes onto it). */
+.reveal .slide-background.portada .slide-background-content::after {
   content: '';
   position: absolute;
   inset: 0;
