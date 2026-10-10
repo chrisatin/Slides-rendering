@@ -195,7 +195,7 @@
           </article>
         </div>
         <aside class="notes">
-          Tres proyectos de grado en curso, todos con luz fuera del espectro visible. Jorge simula imágenes térmicas resolviendo la ecuación de transferencia radiativa en Mitsuba 3: en el video la cámara da una vuelta completa alrededor de cinco materiales medidos mientras la banda va de 8 a 10 micras y regresa; el aire y el cielo cambian con la longitud de onda. El aluminio parece frío porque casi no emite y refleja el cielo a menos veinte grados. Chris y Juanda usan 3D Gaussian Splatting: Chris en infrarrojo con restricciones físicas, Juanda con imágenes hiperespectrales y desmezclado espectral. Pendiente: confirmar el stack de cada uno (info/*.yml) y si el proyecto de Juan Toloza entra aquí.
+          Tres proyectos de grado en curso, todos con luz fuera del espectro visible. Jorge simula imágenes térmicas resolviendo la ecuación de transferencia radiativa en Mitsuba 3: en el video la cámara da una vuelta completa alrededor de cinco materiales medidos mientras la banda va de 8 a 10 micras y regresa; el aire y el cielo cambian con la longitud de onda. El aluminio parece frío porque casi no emite y refleja el cielo a menos veinte grados. Chris y Juanda usan 3D Gaussian Splatting: Chris en infrarrojo con restricciones físicas, Juanda con imágenes hiperespectrales y desmezclado espectral. El proyecto de Juan Toloza se menciona en la siguiente diapositiva. Pendiente: confirmar el stack de cada uno (info/*.yml).
         </aside>
       </section>
 
@@ -203,16 +203,18 @@
       <section id="hacia-donde-vamos" data-section="vision">
         <header class="slide-head">
           <h2>Hacia dónde vamos</h2>
-          <p class="sub">Juntar el control de un motor físico con lo que una red aprende de las fotos.</p>
+          <p class="sub">La idea es explorar tres áreas: renderizado, <span class="term">Inverse Rendering</span> y <span class="term">Neural Rendering</span>.</p>
         </header>
         <svg class="convergencia" viewBox="0 0 1152 260" role="img" aria-labelledby="convergencia-titulo">
-          <title id="convergencia-titulo">Dos rayos, Motores de Renderizado y Neural Rendering, convergen en un solo haz que apunta a Real-time Neural Engines</title>
-          <polyline class="rayo-engines" pathLength="1" points="0,50 360,50 560,130" />
-          <polyline class="rayo-neural" pathLength="1" points="0,210 360,210 560,130" />
+          <title id="convergencia-titulo">Tres rayos, Motores de Renderizado, Inverse Rendering y Neural Rendering, convergen en un solo haz que apunta a Real-time Neural Engines</title>
+          <polyline class="rayo-engines" pathLength="1" points="0,40 360,40 560,130" />
+          <polyline class="rayo-inverse" pathLength="1" points="0,130 560,130" />
+          <polyline class="rayo-neural" pathLength="1" points="0,220 360,220 560,130" />
           <polyline class="rayo-meta" pathLength="1" points="560,130 1040,130" />
           <polygon class="rayo-meta-punta" points="1040,116 1068,130 1040,144" />
-          <text x="0" y="32" class="etq etq-engines">Motores de Renderizado</text>
-          <text x="0" y="250" class="etq etq-neural">Neural Rendering</text>
+          <text x="0" y="24" class="etq etq-engines">Motores de Renderizado</text>
+          <text x="0" y="116" class="etq etq-inverse">Inverse Rendering</text>
+          <text x="0" y="252" class="etq etq-neural">Neural Rendering</text>
           <text x="1068" y="100" text-anchor="end" class="etq etq-meta">Real-time Neural Engines</text>
         </svg>
         <ol class="etapas">
@@ -222,28 +224,41 @@
           </li>
           <li class="fragment fade-up">
             <span class="etapa">Siguiente</span>
-            <p>Escenas neuronales dentro de un motor físico: la red aprende, el motor garantiza la física.</p>
+            <p>Extender el proyecto de Juan Toloza para seguir incorporando simuladores.</p>
           </li>
           <li class="fragment fade-up">
             <span class="etapa">Meta</span>
-            <p>Motores neuronales en tiempo real, con control explícito sobre luz y materiales.</p>
+            <p>Explorar renderizado, <span class="term">Inverse Rendering</span> (de la foto a la escena) y <span class="term">Neural Rendering</span> juntos.</p>
           </li>
         </ol>
         <aside class="notes">
-          Nuestras dos fortalezas son los motores físicos, que dan control y exactitud, y el Neural Rendering, que aprende escenas desde fotos y corre rápido. La estrategia es juntarlas. Hoy van por separado; lo siguiente es meter escenas neuronales dentro de un motor físico; la meta es un motor neuronal en tiempo real. Pendiente: confirmar si se menciona el grant de NVIDIA y en qué estado está.
+          Hacia el futuro, la idea es explorar tres áreas: el renderizado, que simula la luz a partir de una escena conocida; el Inverse Rendering, que hace el camino contrario y recupera geometría, materiales e iluminación a partir de fotos; y el Neural Rendering, que aprende la escena con redes. Hoy los simuladores físicos y el 3D Gaussian Splatting espectral van por separado. Lo siguiente: el proyecto de Juan Toloza se va a extender para seguir incorporando simuladores. La meta es trabajar las tres áreas juntas. Pendiente: confirmar si se menciona el grant de NVIDIA y en qué estado está.
         </aside>
       </section>
 
       <!-- 08 · Por qué unirte. The only number on screen is the CVsports result (letter in "Rendering - Line's Update"). -->
       <section id="por-que-unirte" data-section="pitch">
         <div class="pitch">
-          <figure class="logro">
-            <img src="assets/images/cvsports_nvs.png" alt="Vista sintetizada de un partido de fútbol, el reto de novel view synthesis de CVsports">
-            <figcaption>
-              <span class="numero">3.<sup>er</sup></span>
-              <span class="logro-texto">puesto en el reto de <span class="term">novel view synthesis</span> de CVsports, workshop de CVPR 2026</span>
-            </figcaption>
-          </figure>
+          <div class="logros">
+            <figure class="logro">
+              <img src="assets/images/cvsports_nvs.png" alt="Vista sintetizada de un partido de fútbol, el reto de novel view synthesis de CVsports">
+              <figcaption>
+                <span class="numero">3.<sup>er</sup></span>
+                <span class="logro-texto">puesto en el reto de <span class="term">novel view synthesis</span> de CVsports, workshop de CVPR 2026</span>
+              </figcaption>
+            </figure>
+            <!-- Second place, semilleros: "De 2D a gemelos digitales" (PDF in the project root; video from tools/media/semilleros_video.py). -->
+            <figure class="logro">
+              <video src="assets/videos/semilleros_2d_3d.mp4" poster="assets/images/semilleros_2d_3d.png"
+                     data-autoplay loop muted playsinline
+                     aria-label="Video del proyecto De 2D a gemelos digitales: de la imagen satelital del campus a la segmentación con SAM 3, los árboles generados, los edificios en BlenderGIS y la escena 3D"></video>
+              <figcaption>
+                <span class="numero">2.<sup>º</sup></span>
+                <span class="logro-texto">puesto en semilleros con «De 2D a gemelos digitales»: entornos 3D automáticos a partir de imágenes satelitales <span class="placeholder">[evento y año]</span></span>
+                <a class="logro-enlace" href="https://claudio0311.github.io/mapa-uis/viser-client/?playbackPath=https://Claudio0311.github.io/mapa-uis/recordings/recording.viser" target="_blank" rel="noopener">Ver el modelo 3D</a>
+              </figcaption>
+            </figure>
+          </div>
           <div class="razones">
             <h2>Por qué unirte</h2>
             <ol>
@@ -257,13 +272,13 @@
               </li>
               <li class="fragment fade-up">
                 <h3>Investigación de frontera</h3>
-                <p>Trabajas con métodos publicados el último año y compites en retos de CVPR.</p>
+                <p>Trabajas con métodos publicados el último año y compites en retos de CVPR y en semilleros.</p>
               </li>
             </ol>
           </div>
         </div>
         <aside class="notes">
-          Tres razones. Una: ves tu matemática funcionando, y cuando falla se nota. Dos: lo que aprendes aquí es lo que piden los equipos de gráficos y visión de la industria. Tres: trabajas en la frontera; este año el semillero quedó tercero en el reto de novel view synthesis del workshop CVsports en CVPR 2026, en Denver.
+          Tres razones. Una: ves tu matemática funcionando, y cuando falla se nota. Dos: lo que aprendes aquí es lo que piden los equipos de gráficos y visión de la industria. Tres: trabajas en la frontera. Este año el semillero quedó tercero en el reto de novel view synthesis del workshop CVsports en CVPR 2026, en Denver, y segundo en semilleros con «De 2D a gemelos digitales»: a partir de imágenes satelitales del campus, segmentan con SAM 3, extraen edificios, caminos y árboles, y Blender arma la escena 3D automáticamente. En el equipo estaban Jorge García y Christian Orduz, de esta línea. El enlace abre el modelo 3D en el navegador; el código está en github.com/Manmanfr/UIS-Render. Pendiente: nombre del evento y año.
         </aside>
       </section>
 

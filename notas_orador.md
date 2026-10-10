@@ -148,25 +148,27 @@ Son tres proyectos de grado, todos en curso, y todos con luz fuera del espectro 
 - *¿Qué es temperatura de brillo?* La temperatura que tendría un cuerpo negro para emitir la radiancia que mide la cámara. Coincide con la temperatura real solo si el material emite como un cuerpo negro; por eso el aluminio "miente".
 - *¿Cuánto tardó el video?* 360 cuadros a 800 × 400 en la GPU del clúster de CVAIL (RTX PRO 6000), unos 45 minutos. Cada cuadro promedia 32 longitudes de onda dentro de una banda de 200 nm para que las líneas de absorción del aire no parpadeen.
 
-**Pendiente antes de presentar:** el stack de cada proyecto (los recuadros punteados en pantalla) y si el proyecto de Juan Toloza entra en esta diapositiva.
+**Pendiente antes de presentar:** el stack de cada proyecto (los recuadros punteados en pantalla). El proyecto de Juan Toloza se menciona en la diapositiva 7.
 
 ---
 
 ## 7. Hacia dónde vamos
 
-**Mensaje:** la estrategia del grupo es unir el control de un motor físico con lo que una red aprende de las fotos.
+**Mensaje:** hacia el futuro, la idea es explorar tres áreas: renderizado, *Inverse Rendering* y *Neural Rendering*.
 
 **Qué decir:**
 
-Al entrar a la diapositiva, los dos rayos se dibujan solos: arriba los motores de renderizado, abajo el *Neural Rendering*, y se juntan en un solo haz.
+Al entrar a la diapositiva, los tres rayos se dibujan solos y se juntan en un solo haz:
 
-Los motores físicos nos dan control y exactitud: sabemos qué ecuación resolvemos. El *Neural Rendering* aprende escenas reales desde fotos y corre rápido. Cada uno por separado tiene límites; la estrategia es juntarlos.
+- Arriba, el renderizado: conocemos la escena (geometría, materiales, luces) y simulamos la imagen. Es lo que hacen los motores físicos y nos da control y exactitud.
+- En el medio, el *Inverse Rendering*: el camino contrario. Partimos de fotos y recuperamos la escena: geometría, materiales e iluminación.
+- Abajo, el *Neural Rendering*: redes que aprenden la escena a partir de fotos y la renderizan rápido.
 
 **[clic]** Hoy: tenemos simuladores físicos, Mitsuba 3 con la ecuación de transferencia radiativa, y *3D Gaussian Splatting* espectral, cada uno por su lado.
 
-**[clic]** Siguiente: meter escenas neuronales dentro de un motor físico. La red aprende la escena; el motor garantiza que la luz se comporte como debe.
+**[clic]** Siguiente: el proyecto de Juan Toloza se va a extender para seguir incorporando simuladores.
 
-**[clic]** Meta: motores neuronales en tiempo real, con control explícito sobre la luz y los materiales.
+**[clic]** Meta: trabajar las tres áreas juntas: simular, recuperar la escena desde fotos y aprenderla con redes.
 
 **Transición:** "¿Y qué gana usted si se une a esto?"
 
@@ -180,17 +182,25 @@ Los motores físicos nos dan control y exactitud: sabemos qué ecuación resolve
 
 **Qué decir:**
 
-Empezar por la imagen de la izquierda: este año el semillero quedó en tercer puesto en el reto de *novel view synthesis* del workshop CVsports, en CVPR 2026, en Denver. La imagen es una vista sintetizada de un partido de fútbol, el tipo de escena del reto.
+Empezar por los dos resultados de la izquierda:
+
+- Arriba: este año el semillero quedó en tercer puesto en el reto de *novel view synthesis* del workshop CVsports, en CVPR 2026, en Denver. La imagen es una vista sintetizada de un partido de fútbol, el tipo de escena del reto.
+- Abajo: segundo puesto en semilleros con «De 2D a gemelos digitales: creación automática de entornos 3D con IA». El video recorre su flujo de trabajo: imagen satelital del campus, segmentación con SAM 3, árboles generados, edificios con BlenderGIS y la escena 3D final. En el equipo estaban Jorge García y Christian Orduz, de esta línea, junto con Giojan David, Mandius Fonseca, Santiago Amaya y Santiago Salamanca.
+- El enlace «Ver el modelo 3D» abre el modelo en el navegador; se puede usar en vivo si hay conexión.
 
 **[clic]** Matemática que se ve: cálculo, álgebra lineal y probabilidad con resultado en pantalla. Si la integral está mal, el píxel también, y se nota.
 
 **[clic]** Habilidades que pide la industria: C++, CUDA, PyTorch y renderizado físico. Es lo que buscan los equipos de gráficos de empresas como NVIDIA, Epic Games o Apple.
 
-**[clic]** Investigación de frontera: trabajamos con métodos publicados el último año y competimos en retos de CVPR.
+**[clic]** Investigación de frontera: trabajamos con métodos publicados el último año y competimos en retos de CVPR y en semilleros.
 
 **Transición:** "Eso es lo que hacemos. Ahora, sus preguntas."
 
 **Cuidado:** no presentar como dato que esas empresas "contratan a nuestros estudiantes"; en pantalla solo se dice que buscan esas habilidades.
+
+**Si preguntan:** el código del proyecto de semilleros está en github.com/Manmanfr/UIS-Render.
+
+**Pendiente antes de presentar:** nombre del evento de semilleros y año (recuadro punteado en pantalla).
 
 ---
 
@@ -215,6 +225,6 @@ Ahora sí, preguntas. Y si alguna de las tres líneas les llamó la atención, e
 ## Lista de pendientes
 
 - [ ] Stack de cada proyecto (diapositiva 6; `info/*.yml`).
-- [ ] Confirmar si el proyecto de Juan Toloza entra en la diapositiva 6.
 - [ ] Estado del grant de NVIDIA y si se menciona (diapositiva 7).
+- [ ] Nombre del evento de semilleros y año (diapositiva 8).
 - [ ] Correo, horario de reuniones, repositorio y enlace del QR (diapositiva 9).
