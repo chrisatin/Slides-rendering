@@ -886,21 +886,29 @@ body {
   color: var(--color-text-code);
 }
 
-.reveal .contacto dd { margin: 0; justify-self: start; }
+.reveal .contacto dd { margin: 0; justify-self: start; font-size: 28px; font-weight: 500; color: var(--color-text); }
 
-/* The CTA slide is the one place the neural pink marks an action (DESIGN.md: CTAs). */
-.reveal .qr.placeholder {
+/* The QR keeps its own white quiet zone, which scanners need; the neural pink frame marks it as the
+   slide's one action (DESIGN.md: CTAs). */
+.reveal .qr {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 12px;
+}
+
+.reveal .qr img {
+  display: block;
   box-sizing: border-box;
   width: 300px;
   height: 300px;
-  padding: 24px;
-  border: 2px dashed var(--color-neural);
+  border: 2px solid var(--color-neural);
   border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.reveal .qr figcaption {
   font-size: 18px;
-  text-align: center;
   color: var(--color-text);
 }
 
